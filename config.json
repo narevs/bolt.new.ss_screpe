@@ -1,0 +1,218 @@
+{
+  "version": "1.0.0",
+  "app": {
+    "name": "Scholar Summit Email Scraper",
+    "description": "Fast, compliant extraction of author emails from academic/journal sources"
+  },
+  "scraping": {
+    "defaultRateLimit": 3000,
+    "maxRetries": 3,
+    "timeout": 30000,
+    "userAgents": [
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0",
+      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+    ]
+  },
+  "sites": {
+    "popular": [
+      {
+        "name": "ACS Publications",
+        "url": "https://pubs.acs.org/",
+        "searchSelector": "input[name='AllField']",
+        "resultSelector": "a[href*='/doi/']",
+        "emailSelectors": [
+          ".author-info .email",
+          ".correspondence .email",
+          "a[href^='mailto:']"
+        ],
+        "journalSelector": ".journal-title",
+        "authorSelector": ".author-name"
+      },
+      {
+        "name": "Hindawi",
+        "url": "https://www.hindawi.com/",
+        "searchSelector": "input[name='query']",
+        "resultSelector": "a[href*='/journals/']",
+        "emailSelectors": [
+          ".author-email",
+          ".correspondence-email",
+          "a[href^='mailto:']"
+        ],
+        "journalSelector": ".journal-name",
+        "authorSelector": ".author"
+      },
+      {
+        "name": "Research Square",
+        "url": "https://www.researchsquare.com/",
+        "searchSelector": "input[name='q']",
+        "resultSelector": "a[href*='/article/']",
+        "emailSelectors": [
+          ".author-email",
+          ".contact-email",
+          "a[href^='mailto:']"
+        ],
+        "journalSelector": ".publication-title",
+        "authorSelector": ".author-name"
+      },
+      {
+        "name": "Oxford Academic",
+        "url": "https://academic.oup.com/",
+        "searchSelector": "input[name='q']",
+        "resultSelector": "a[href*='/article/']",
+        "emailSelectors": [
+          ".author-email",
+          ".correspondence .email",
+          "a[href^='mailto:']"
+        ],
+        "journalSelector": ".journal-title",
+        "authorSelector": ".author-name"
+      },
+      {
+        "name": "SAGE Journals",
+        "url": "https://journals.sagepub.com/",
+        "searchSelector": "input[name='AllField']",
+        "resultSelector": "a[href*='/doi/']",
+        "emailSelectors": [
+          ".author-email",
+          ".correspondence-email",
+          "a[href^='mailto:']"
+        ],
+        "journalSelector": ".publication-title",
+        "authorSelector": ".author"
+      },
+      {
+        "name": "Cureus",
+        "url": "https://www.cureus.com/",
+        "searchSelector": "input[name='search']",
+        "resultSelector": "a[href*='/articles/']",
+        "emailSelectors": [
+          ".author-email",
+          ".contact-info .email",
+          "a[href^='mailto:']"
+        ],
+        "journalSelector": ".journal-name",
+        "authorSelector": ".author-name"
+      },
+      {
+        "name": "Wiley Online Library",
+        "url": "https://onlinelibrary.wiley.com/",
+        "searchSelector": "input[name='AllField']",
+        "resultSelector": "a[href*='/doi/']",
+        "emailSelectors": [
+          ".author-email",
+          ".correspondence .email",
+          "a[href^='mailto:']"
+        ],
+        "journalSelector": ".journal-title",
+        "authorSelector": ".author-name"
+      },
+      {
+        "name": "Taylor & Francis",
+        "url": "https://www.tandfonline.com/",
+        "searchSelector": "input[name='query']",
+        "resultSelector": "a[href*='/doi/']",
+        "emailSelectors": [
+          ".author-email",
+          ".correspondence-email",
+          "a[href^='mailto:']"
+        ],
+        "journalSelector": ".journal-title",
+        "authorSelector": ".author"
+      },
+      {
+        "name": "Springer",
+        "url": "https://link.springer.com/",
+        "searchSelector": "input[name='query']",
+        "resultSelector": "a[href*='/article/']",
+        "emailSelectors": [
+          ".author-email",
+          ".correspondence .email",
+          "a[href^='mailto:']"
+        ],
+        "journalSelector": ".journal-title",
+        "authorSelector": ".author-name"
+      },
+      {
+        "name": "PLOS ONE",
+        "url": "https://journals.plos.org/plosone/",
+        "searchSelector": "input[name='q']",
+        "resultSelector": "a[href*='/article/']",
+        "emailSelectors": [
+          ".author-email",
+          ".correspondence .email",
+          "a[href^='mailto:']"
+        ],
+        "journalSelector": ".journal-title",
+        "authorSelector": ".author-name"
+      },
+      {
+        "name": "ScienceDirect",
+        "url": "https://www.sciencedirect.com/",
+        "searchSelector": "input[name='qs']",
+        "resultSelector": "a[href*='/science/article/']",
+        "emailSelectors": [
+          ".author-email",
+          ".correspondence .email",
+          "a[href^='mailto:']"
+        ],
+        "journalSelector": ".publication-title",
+        "authorSelector": ".author"
+      }
+    ]
+  },
+  "validation": {
+    "email": {
+      "regex": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+      "excludePatterns": [
+        "noreply",
+        "no-reply", 
+        "donotreply",
+        "support@",
+        "admin@",
+        "info@",
+        "webmaster@"
+      ]
+    },
+    "mx": {
+      "enabled": true,
+      "timeout": 5000,
+      "retries": 2
+    }
+  },
+  "export": {
+    "formats": ["csv", "xlsx", "json", "txt"],
+    "defaultFormat": "csv",
+    "includeStats": true,
+    "fields": [
+      "name",
+      "email",
+      "journal", 
+      "topic",
+      "verified",
+      "duplicate",
+      "source_url",
+      "timestamp"
+    ]
+  },
+  "license": {
+    "offlineGracePeriod": 259200000,
+    "checkInterval": 86400000,
+    "publicKey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2Z3QX0EXAMPLE_KEY_HERE\n-----END PUBLIC KEY-----"
+  },
+  "database": {
+    "filename": "scholar_scraper.db",
+    "backup": {
+      "enabled": true,
+      "interval": 3600000,
+      "maxBackups": 10
+    }
+  },
+  "ui": {
+    "theme": "default",
+    "autoSave": true,
+    "autoSaveInterval": 30000,
+    "maxRecentUrls": 50,
+    "maxDisplayResults": 1000
+  }
+}

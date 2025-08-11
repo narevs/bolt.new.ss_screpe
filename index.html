@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scholar Summit Email Scraper</title>
+  <link rel="stylesheet" href="./src/styles/main.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <h1>Scholar Summit Email Scraper</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <div class="header-right">
+        <button id="adminBtn" class="btn btn-secondary">Admin Panel</button>
+        <button id="clearCookiesBtn" class="btn btn-warning">Clear Cookies</button>
+        <span class="user-info">Welcome, <span id="currentUser">User</span></span>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Left Panel: URL List -->
+      <div class="panel left-panel">
+        <div class="panel-header">
+          <h3>URL Queue</h3>
+          <div class="panel-controls">
+            <button id="importUrlsBtn" class="btn btn-sm">Import</button>
+            <button id="exportUrlsBtn" class="btn btn-sm">Export</button>
+            <button id="clearUrlsBtn" class="btn btn-sm btn-danger">Clear</button>
+          </div>
+        </div>
+        <div class="panel-content">
+          <div class="url-input-section">
+            <input type="text" id="urlInput" placeholder="Enter URL manually..." class="form-control">
+            <button id="addUrlBtn" class="btn btn-primary">Add URL</button>
+          </div>
+          <div class="url-list" id="urlList">
+            <!-- URLs will be populated here -->
+          </div>
+          <div class="url-stats">
+            <span>Total URLs: <span id="totalUrls">0</span></span>
+            <span>Processed: <span id="processedUrls">0</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Middle Panel: Browser + Controls -->
+      <div class="panel middle-panel">
+        <div class="browser-controls">
+          <div class="control-row">
+            <select id="ruleSelect" class="form-control">
+              <option value="popular">Popular Sites</option>
+              <option value="custom">Custom Rule</option>
+            </select>
+            <select id="siteSelect" class="form-control">
+              <option value="">Select a site...</option>
+            </select>
+          </div>
+          <div class="control-row">
+            <input type="text" id="addressBar" placeholder="https://google.com" class="form-control address-bar">
+            <button id="goBtn" class="btn btn-primary">Go</button>
+            <button id="backBtn" class="btn btn-secondary">Back</button>
+            <button id="reloadBtn" class="btn btn-secondary">Reload</button>
+          </div>
+          <div class="control-row">
+            <input type="text" id="searchInput" placeholder="Enter search keywords..." class="form-control">
+            <input type="number" id="linkCount" value="50" min="1" max="200" class="form-control link-count">
+            <button id="scrapeLinksBtn" class="btn btn-success">Scrape Links</button>
+          </div>
+          <div class="control-row">
+            <button id="startBtn" class="btn btn-success">Start Scraping</button>
+            <button id="pauseBtn" class="btn btn-warning" disabled>Pause</button>
+            <button id="stopBtn" class="btn btn-danger" disabled>Stop</button>
+            <div class="rate-control">
+              <label>Rate (ms): </label>
+              <input type="range" id="rateSlider" min="1000" max="10000" value="3000" class="rate-slider">
+              <span id="rateValue">3000</span>
+            </div>
+          </div>
+        </div>
+        <div class="browser-container">
+          <webview id="browserView" src="https://google.com" style="width: 100%; height: 100%;"></webview>
+        </div>
+      </div>
+
+      <!-- Right Panel: Collected Data + Stats -->
+      <div class="panel right-panel">
+        <div class="panel-header">
+          <h3>Collected Emails</h3>
+          <div class="panel-controls">
+            <button id="exportCsvBtn" class="btn btn-sm btn-success">Export CSV</button>
+            <button id="exportXlsxBtn" class="btn btn-sm btn-success">Export XLSX</button>
+            <button id="copyBtn" class="btn btn-sm">Copy</button>
+            <button id="clearDataBtn" class="btn btn-sm btn-danger">Clear</button>
+          </div>
+        </div>
+        <div class="panel-content">
+          <div class="data-list" id="dataList">
+            <!-- Collected emails will be displayed here -->
+          </div>
+          <div class="stats-section">
+            <h4>Statistics</h4>
+            <div class="stats-grid">
+              <div class="stat-item">
+                <label>Today:</label>
+                <div class="stat-values">
+                  <span>Data: <span id="todayData">0</span></span>
+                  <span>Pages: <span id="todayPages">0</span></span>
+                </div>
+              </div>
+              <div class="stat-item">
+                <label>Session:</label>
+                <div class="stat-values">
+                  <span>Data: <span id="sessionData">0</span></span>
+                  <span>Pages: <span id="sessionPages">0</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Status Bar -->
+    <footer class="status-bar">
+      <div class="status-left">
+        <span id="statusText">Ready</span>
+      </div>
+      <div class="status-right">
+        <span id="progressText">0/0</span>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

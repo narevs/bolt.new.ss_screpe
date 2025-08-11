@@ -1,0 +1,44 @@
+@@ .. @@
+   "name": "vite-project",
+   "private": true,
+   "version": "0.0.0",
++  "main": "electron/main.js",
++  "homepage": "./",
+   "type": "module",
+   "scripts": {
+     "dev": "vite",
+     "build": "vite build",
+-    "preview": "vite preview"
++    "preview": "vite preview",
++    "electron": "electron .",
++    "electron-dev": "concurrently \"npm run dev\" \"wait-on http://localhost:5173 && electron .\"",
++    "build-electron": "npm run build && electron-builder",
++    "dist": "npm run build && electron-builder --publish=never"
+   },
+   "devDependencies": {
+-    "vite": "^5.4.2"
++    "vite": "^5.4.2",
++    "concurrently": "^8.2.2",
++    "wait-on": "^7.2.0"
++  },
++  "build": {
++    "appId": "com.scholarsummit.scraper",
++    "productName": "Scholar Summit Email Scraper",
++    "directories": {
++      "output": "dist"
++    },
++    "files": [
++      "dist/**/*",
++      "electron/**/*",
++      "node_modules/**/*"
++    ],
++    "win": {
++      "target": "nsis",
++      "icon": "assets/icon.ico"
++    },
++    "nsis": {
++      "oneClick": false,
++      "allowToChangeInstallationDirectory": true
++    }
+   }
+ }
